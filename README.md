@@ -29,6 +29,7 @@
 - `DELETE /posts/:id` - предназначен для удаления статей
 
 Разширенную инфомацию можно получить на WiKi проекта
+https://github.com/PavelBoikow/DiplomBoikov.wiki.git
 
 
 ## Команды
