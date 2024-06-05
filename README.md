@@ -28,8 +28,8 @@
 - `PATHE /posts/:id` - позволяет отредактировать статью на сайте
 - `DELETE /posts/:id` - предназначен для удаления статей
 
-Разширенную инфомацию можно получить на WiKi проекта
-https://github.com/PavelBoikow/DiplomBoikov.wiki.git
+Разширенную инфомацию можно получить на [WiKi](https://github.com/PavelBoikow/DiplomBoikov/wiki/%D0%AD%D0%BD%D0%B4%D0%BF%D0%BE%D0%B8%D0%BD%D1%82%D1%8B) проекта
+
 
 
 ## Команды
