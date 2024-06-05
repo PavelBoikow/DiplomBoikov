@@ -30,7 +30,15 @@
 
 Разширенную инфомацию можно получить на [WiKi](https://github.com/PavelBoikow/DiplomBoikov/wiki/%D0%AD%D0%BD%D0%B4%D0%BF%D0%BE%D0%B8%D0%BD%D1%82%D1%8B) проекта
 
+## Технологии 
 
+- JavaScript
+- Node.js
+- Express + Validator
+- MongoDB/Mongoose
+- JSON web Token
+- Multer
+- BCrypt
 
 ## Команды
 `npm start` - команда отвечает за запуск Backend сервера проекта
