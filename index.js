@@ -1,12 +1,13 @@
+
 import express from "express";
 import multer from "multer";
 import cors from 'cors';
 
 import mongoose from "mongoose";
 
-import {registerValidator, loginValidator, postCreateValidator} from './validations.js';
+import {registerValidator, loginValidator, postCreateValidator, studCreateValidator} from './validations.js';
 
-import {PostController, UserController} from './controlers/index.js';
+import {PostController, UserController, StudController} from './controlers/index.js';
 import {handleValidationsErrors , ckeckAuth} from "./utils/index.js";
 
 mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.bm7w8nz.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
@@ -14,6 +15,7 @@ mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.bm7w8nz.mongodb.net/blog?r
 .catch((err) => console.log('DB error',err));
 
 const app = express();
+
 
 const storage = multer.diskStorage({
     destination: (_, __, cb)=>{
@@ -41,12 +43,20 @@ app.post('/upload', ckeckAuth, upload.single('image'), (req, res) => {
 });
 
 
+app.get('/posts/popularity', PostController.getAllPopularity);
 app.get('/posts', PostController.getAll);
 app.get('/tags',PostController.getLastTags);
 app.get('/posts/:id', PostController.getOne);
 app.post('/posts', ckeckAuth , postCreateValidator, handleValidationsErrors, PostController.create);
 app.delete('/posts/:id', ckeckAuth , PostController.remove);
 app.patch('/posts/:id', ckeckAuth, postCreateValidator, handleValidationsErrors, PostController.update);
+
+
+app.get('/StudentAssociations', StudController.getAll);
+app.get('/StudentAssociations/:id', StudController.getOne);
+app.post('/StudentAssociations', ckeckAuth , studCreateValidator, handleValidationsErrors, StudController.create);
+app.delete('/StudentAssociations/:id', ckeckAuth , StudController.remove);
+app.patch('/StudentAssociations/:id', ckeckAuth, studCreateValidator, handleValidationsErrors, StudController.update);
 
 
 app.listen(4444,(err)=>{

@@ -1,36 +1,9 @@
-import PostModel from '../models/Post.js';
-
-export const getLastTags = async (req, res) =>{
-    try {
-        const posts = await PostModel.find().exec();
-
-        const tags = posts.map(obj => obj.tags).flat().sort((a,b)=> a.date_field>b.date_field?1:-1).slice(0, 5);
-
-        res.json(tags);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: 'Не удалось получить статьи',
-        });
-    }
-};
+import StudModel from '../models/Stud.js';
 
 export const getAll = async (req, res) => {
     try {
-        const posts = await PostModel.find().populate('user').exec();
-        res.json(posts.sort((a,b)=> a.date_field>b.date_field?1:-1));
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            message: 'Не удалось получить статьи',
-        });
-    }
-};
-
-export const getAllPopularity = async (req, res) => {
-    try {
-        const posts = await PostModel.find().populate('user').exec();
-        res.json(posts.sort((a,b)=> a.viewsCount>b.viewsCount?-1:1));
+        const studs = await StudModel.find().exec();
+        res.json(studs.sort((a,b)=> a.date_field>b.date_field?1:-1));
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -41,22 +14,19 @@ export const getAllPopularity = async (req, res) => {
 
 export const getOne = (req, res) => {
     try {
-        const postId = req.params.id    
-        PostModel.findOneAndUpdate({
-        _id: postId,
-        },{
-        $inc: { viewsCount: 1 },
+        const studId = req.params.id    
+        StudModel.findOneAndUpdate({
+        _id: studId,
         },{
         returnDocument: 'after',
         },
-        ).populate('user').then((post) => {
-        if (!post) {
+        ).then((stud) => {
+        if (!stud) {
         return res.status(404).json({
         message: 'Статьтя не найдена',
         })
         }
-
-        res.json(post)
+        res.json(stud)
         })
         } catch (error) {
         console.log(error)
@@ -68,17 +38,15 @@ export const getOne = (req, res) => {
 
 export const create = async (req, res) => {
     try {
-        const doc = new PostModel({
+        const doc = new StudModel({
             title: req.body.title,
             text: req.body.text,
             imageUrl: req.body.imageUrl,
-            tags: req.body.tags,
-            user: req.userId,
         });
 
-        const post = await doc.save();
+        const stud = await doc.save();
 
-        res.json(post);
+        res.json(stud);
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -89,12 +57,12 @@ export const create = async (req, res) => {
 
 export const remove = async (req, res) => {
     try {
-        const postId = req.params.id;
+        const studId = req.params.id;
 
-        PostModel.findOneAndDelete({
-            _id: postId,
-        }).then((post) => {
-            if (!post) {
+        StudModel.findOneAndDelete({
+            _id: studId,
+        }).then((stud) => {
+            if (!stud) {
             return res.status(404).json({
             message: 'Статьтя не найдена',
             })
@@ -115,16 +83,14 @@ export const remove = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
-        const postId = req.params.id;
+        const studId = req.params.id;
 
-        await PostModel.updateOne({
-            _id: postId,
+        await StudModel.updateOne({
+            _id: studId,
         },{
             title: req.body.title,
             text: req.body.text,
             imageUrl: req.body.imageUrl,
-            tags: req.body.tags,
-            user: req.userId,
         })
 
         res.json({

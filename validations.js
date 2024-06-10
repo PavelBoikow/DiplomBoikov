@@ -17,3 +17,9 @@ export const postCreateValidator = [
     body('tags', 'Неверный формат тэгов (Укажите массив)').optional().isArray(),
     body('imageUrl', 'Неверная ссылка на изображение').optional().isString(),
 ];
+
+export const studCreateValidator = [
+    body('title', 'Введите заголовок статьи').isLength({min: 3}).isString(),
+    body('text', 'Введите текст статьи').isLength({min: 3}).isString(),
+    body('imageUrl', 'Неверная ссылка на изображение').optional().isString(),
+];
