@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 import {registerValidator, loginValidator, postCreateValidator, studCreateValidator} from './validations.js';
 
-import {PostController, UserController, StudController} from './controlers/index.js';
+import {PostController, UserController, StudController, InfoController} from './controlers/index.js';
 import {handleValidationsErrors , ckeckAuth} from "./utils/index.js";
 
 mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.bm7w8nz.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
@@ -41,6 +41,14 @@ app.post('/upload', ckeckAuth, upload.single('image'), (req, res) => {
         url: `/uploads/${req.file.originalname}`,
     });
 });
+
+
+
+app.get('/info', InfoController.getAll);
+app.get('/info/:id', InfoController.getOne);
+app.post('/info', ckeckAuth , InfoController.create);
+app.delete('/info/:id', ckeckAuth , InfoController.remove);
+app.patch('/info/:id', ckeckAuth, InfoController.update);
 
 
 app.get('/posts/popularity', PostController.getAllPopularity);
