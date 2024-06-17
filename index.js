@@ -10,7 +10,7 @@ import {registerValidator, loginValidator, postCreateValidator, studCreateValida
 import {PostController, UserController, StudController, InfoController} from './controlers/index.js';
 import {handleValidationsErrors , ckeckAuth} from "./utils/index.js";
 
-mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.bm7w8nz.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGODB_URL)
 .then(()=> console.log('DB ok'))
 .catch((err) => console.log('DB error',err));
 
@@ -67,7 +67,7 @@ app.delete('/StudentAssociations/:id', ckeckAuth , StudController.remove);
 app.patch('/StudentAssociations/:id', ckeckAuth, studCreateValidator, handleValidationsErrors, StudController.update);
 
 
-app.listen(4444,(err)=>{
+app.listen(process.env.PORT || 4444,(err)=>{
     if (err){
         return console.log(err);
     }
