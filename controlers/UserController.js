@@ -83,6 +83,65 @@ export const login = async (req, res)=>{
     }
 };
 
+export const getAll = async (req, res) => {
+    try {
+        const Users = await UserSchema.find().exec();
+        res.json(Users.sort((a,b)=> a.date_field>b.date_field?1:-1));
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось получить статьи',
+        });
+    }
+};
+
+export const getOne = (req, res) => {
+    try {
+        const userId = req.params.id    
+        UserSchema.findOneAndUpdate({
+        _id: userId,
+        },{
+        returnDocument: 'after',
+        },
+        ).then((user) => {
+        if (!user) {
+        return res.status(404).json({
+        message: 'Статьтя не найдена',
+        })
+        }
+        res.json(user)
+        })
+        } catch (error) {
+        console.log(error)
+        res.status(500).json({
+        messgae: 'Не удалось получить статью',
+        })
+        }
+};
+
+export const update = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        await UserSchema.updateOne({
+            _id: userId,
+        },{
+            email: req.body.email,
+            fullName: req.body.fullName,
+            status:req.body.status,
+        })
+
+        res.json({
+            success: true,
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось обновить статью',
+        });
+    }
+};
+
 export const getMe = async (req, res) =>{
     try{
         const user = await UserSchema.findById(req.userId);
@@ -101,6 +160,33 @@ export const getMe = async (req, res) =>{
         console.log(err);
         res.status(500).json({
             message: 'Нет доступа',
+        });
+    }
+};
+
+
+export const remove = async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        UserSchema.findOneAndDelete({
+            _id: userId,
+        }).then((post) => {
+            if (!post) {
+            return res.status(404).json({
+            message: 'Статьтя не найдена',
+            })
+        }
+
+        res.json({
+            success: true,
+        })
+        })
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось удалить сатью',
         });
     }
 };
