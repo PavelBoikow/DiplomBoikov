@@ -9,9 +9,10 @@ import mongoose from "mongoose";
 import {registerValidator, loginValidator, postCreateValidator, studCreateValidator} from './validations.js';
 
 import {PostController, UserController, StudController, InfoController} from './controlers/index.js';
-import {handleValidationsErrors , ckeckAuth} from "./utils/index.js";
+import {handleValidationsErrors , ckeckAuth, ckeckStat} from "./utils/index.js";
 
 mongoose.connect(process.env.MONGODB_URL)
+// mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.bm7w8nz.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
 .then(()=> console.log('DB ok'))
 .catch((err) => console.log('DB error',err));
 
@@ -39,6 +40,10 @@ app.use('/uploads', express.static('uploads'));
 app.get('/auth/me', ckeckAuth, UserController.getMe);
 app.post('/auth/login', loginValidator, handleValidationsErrors, UserController.login);
 app.post('/auth/register', registerValidator, handleValidationsErrors, UserController.register);
+app.get('/auth/all', ckeckStat , UserController.getAll);
+app.get('/auth/:id', ckeckStat , UserController.getOne);
+app.patch('/auth/:id', ckeckStat, UserController.update);
+app.delete('/auth/:id', ckeckStat , UserController.remove);
 
 app.post('/upload', ckeckAuth, upload.single('image'), (req, res) => {
     res.json({

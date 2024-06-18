@@ -11,7 +11,7 @@ export default async (req, res, next) =>{
 
             req.userId = decoded._id;
             const user = await UserSchema.findById(req.userId);        
-            if (user._doc.status==1){
+            if (user._doc.status==2){
                 next();
             }
             else{
