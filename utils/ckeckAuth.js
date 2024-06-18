@@ -1,26 +1,15 @@
 import jwt from 'jsonwebtoken';
-import UserSchema from "../models/User.js";
 
-export default async (req, res, next) =>{
+export default (req, res, next) =>{
     const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
 
     if (token) {
-        try
-        {
+        try{
             const decoded = jwt.verify(token, 'secret123');
 
             req.userId = decoded._id;
-            const user = await UserSchema.findById(req.userId);        
-            if (user._doc.status==1){
-                next();
-            }
-            else{
-                res.status(403).json({
-                    message: 'Нет доступа',
-                });}
-        
-        } 
-        catch(err) {
+            next();
+        }catch(err) {
             console.log(err);
             res.status(403).json({
                 message: 'Нет доступа',
@@ -31,4 +20,7 @@ export default async (req, res, next) =>{
             message:'Нет доступа',
         })
     }
+
+
+
 }
