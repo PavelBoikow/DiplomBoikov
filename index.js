@@ -22,7 +22,6 @@ const storage = multer.diskStorage({
     destination: (_, __, cb)=>{
         if (!fs.existsSync('uploads')){
             fs.mkdirSync('uploads');
-            console.log('papka_sozdana')
         }
         cb(null, 'uploads');
     },
