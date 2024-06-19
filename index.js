@@ -40,7 +40,7 @@ app.use('/uploads', express.static('uploads'));
 app.get('/auth/me', ckeckAuth, UserController.getMe);
 app.post('/auth/login', loginValidator, handleValidationsErrors, UserController.login);
 app.post('/auth/register', registerValidator, handleValidationsErrors, UserController.register);
-app.get('/auth/all' , UserController.getAll);
+app.get('/auth/all' ,ckeckStat, UserController.getAll);
 app.get('/auth/:id', ckeckStat , UserController.getOne);
 app.patch('/auth/:id', ckeckStat, UserController.update);
 app.delete('/auth/:id', ckeckStat , UserController.remove);
