@@ -10,6 +10,6 @@ build:
   skip: true
 run:
   scriptName: index.js
-  command: npm start
+  command: npm run start:dev
   persistenceMount: /data
   containerPort: 80
