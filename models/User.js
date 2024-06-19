@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
     },
     status:{
         type: Number,
-        default: 0,
+        default: 2,
     }
 },{
     timestamps:true,
