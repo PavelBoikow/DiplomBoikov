@@ -11,7 +11,8 @@ import {registerValidator, loginValidator, postCreateValidator, studCreateValida
 import {PostController, UserController, StudController, InfoController} from './controlers/index.js';
 import {handleValidationsErrors , ckeckAuth, ckeckStat} from "./utils/index.js";
 
-mongoose.connect(process.env.MONGODB_URL)
+// mongoose.connect(process.env.MONGODB_URL)
+mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.bm7w8nz.mongodb.net/blog?retryWrites=true&w=majority&appName=Cluster0')
 .then(()=> console.log('DB ok'))
 .catch((err) => console.log('DB error',err));
 
