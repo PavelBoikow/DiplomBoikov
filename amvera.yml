@@ -7,6 +7,7 @@ meta:
 build:
   artifacts:
     '*': /
+  skip: true
 run:
   scriptName: index.js
   command: npm run start:dev
